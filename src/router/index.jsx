@@ -5,6 +5,7 @@ import {
 import BaseLayout from "@/components/Layout/BaseLayout";
 import Home from '@/page/Home'
 import Login from '@/page/Login'
+import ProductDetail from '@/page/ProductDetail'
 const router = createBrowserRouter([
     {
         path: "/",
@@ -12,6 +13,9 @@ const router = createBrowserRouter([
         children: [{
             path: '/',
             element: <Home/>
+        },{
+            path: '/sanpham/:slug',
+            element: <ProductDetail/>
         },
         {
             path: '/login',

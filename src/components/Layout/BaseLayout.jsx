@@ -13,6 +13,7 @@ const BaseLayout = () => {
       <Content
         style={{
           padding: '0 48px',
+          minHeight: 'calc(100vh - 129px)'
         }}
       >
        <Outlet/>

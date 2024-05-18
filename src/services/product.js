@@ -4,3 +4,9 @@ export function getProducts(page, size, fSort){
         url: `/products?populate=*&pagination[pageSize]=${size}&pagination[page]=${page}&sort=${fSort}:desc`
     })
 }
+
+export function getProductBySlug(slug){
+    return axios({
+        url: `/products/${slug}?populate=*`
+    })
+}
