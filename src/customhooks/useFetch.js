@@ -21,7 +21,7 @@ export default function useFetch(layData){
         .finally(()=>{
             setLoading(false)
         })
-    }, [pagination?.page, pagination?.pageSize])
+    }, [pagination?.page, pagination?.pageSize, layData])
 
     return {data, setData, pagination, setPagination, loading}
 }

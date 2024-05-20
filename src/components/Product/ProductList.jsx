@@ -5,10 +5,10 @@ import './ProductList.scss'
 import { Link } from 'react-router-dom'
 const {VITE_BASE_API_URL} = import.meta.env
 const { Meta } = Card;
-export default function ProductList(){
-    
+export default function ProductList(props){
+    const query = props.query ? props.query : ''
     const {data, setData, pagination, setPagination, loading} = useFetch(()=>{
-        return getProducts(pagination.page, pagination.pageSize, 'price')
+        return getProducts(query, pagination.page, pagination.pageSize, 'price')
     })
   
     return (

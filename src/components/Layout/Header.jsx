@@ -5,7 +5,7 @@ const { Header } = Layout;
 export default function HeaderComponent() {
     const items = [{
         key: 'home',
-        label: <h1>Trang chu</h1>
+        label: <Link to="/"><h1>Trang chu</h1></Link>
     }, {
         key: 'contact',
         label: <h1>Contact</h1>
@@ -19,7 +19,7 @@ export default function HeaderComponent() {
                 justifyContent: 'space-between'
             }}
         >
-            <img src={logo} alt="" />
+            <Link to="/"><img src={logo} alt="" /></Link>
             <Menu
                 theme="dark"
                 mode="horizontal"
