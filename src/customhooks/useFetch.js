@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function useFetch(layData){
+export default function useFetch(layData, query){
     const [data, setData] = useState()
     const [pagination, setPagination] = useState({
         page: 1,
@@ -21,7 +21,7 @@ export default function useFetch(layData){
         .finally(()=>{
             setLoading(false)
         })
-    }, [pagination?.page, pagination?.pageSize, layData])
+    }, [pagination?.page, pagination?.pageSize, query])
 
     return {data, setData, pagination, setPagination, loading}
 }

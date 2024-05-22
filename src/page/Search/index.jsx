@@ -1,28 +1,20 @@
 import './index.scss'
-import {Row, Col, Input} from 'antd'
+import {Row, Col} from 'antd'
 import ProductList from '@/components/Product/ProductList'
-import { useState } from 'react';
-const { Search } = Input;
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 export default function SearchPage(){
-    const [text, setText] = useState("")
-
-    function onSearch(value){
-        console.log('onSearch',value);
-        setText(value)
-    }
+    const [query, setQuery] = useSearchParams()
+    const [text, setText] = useState(query.get('ten'))
+    useEffect(()=>{
+        setText(query.get('ten'))
+    }, [query.get('ten')])
 
     return (
         <>
             <Row>
                 <Col>
                     <h1>Tim kiem</h1>
-                    <Search
-                        placeholder="input search text"
-                        onSearch={onSearch}
-                        style={{
-                            width: 200,
-                        }}
-                    />
                 </Col>
                 <Col>
                     <ProductList query={`filters[name][$contains]=${text}`}/>

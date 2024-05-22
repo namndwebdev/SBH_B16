@@ -3,15 +3,14 @@ import { getProducts } from "@/services/product"
 import { Row, Col, Card, Pagination } from 'antd'
 import './ProductList.scss'
 import { Link } from 'react-router-dom'
-import { useCallback } from "react"
 const {VITE_BASE_API_URL} = import.meta.env
 const { Meta } = Card;
 export default function ProductList(props){
     const query = props.query ? props.query : ''
-    const api = useCallback(()=>{
+    
+    const {data, setData, pagination, setPagination, loading} = useFetch(()=>{
         return getProducts(query, pagination.page, pagination.pageSize, 'price')
-    }, [query])
-    const {data, setData, pagination, setPagination, loading} = useFetch(api)
+    }, query)
   
     return (
         <>
