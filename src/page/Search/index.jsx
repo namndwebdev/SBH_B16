@@ -14,7 +14,7 @@ export default function SearchPage(){
         <>
             <Row>
                 <Col>
-                    <h1>Tim kiem</h1>
+                    <h1>Tim kiem: {text}</h1>
                 </Col>
                 <Col>
                     <ProductList query={`filters[name][$contains]=${text}`}/>
