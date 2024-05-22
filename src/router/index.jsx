@@ -7,6 +7,7 @@ import Home from '@/page/Home'
 import Login from '@/page/Login'
 import ProductDetail from '@/page/ProductDetail'
 import Category from "@/page/Category";
+import Search from "@/page/Search";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
         {
             path: '/danh-muc/:categorySlug',
             element: <Category/>
+        },
+        {
+            path: '/timkiem',
+            element: <Search/>
         },
         {
             path: '/login',

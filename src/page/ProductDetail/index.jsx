@@ -25,7 +25,7 @@ export default function ProductDetail(){
     let description  = data?.attributes?.description?.replaceAll('/upload', import.meta.env.VITE_BASE_API_URL + '/upload')
     let brand = <Link to="#">{data?.attributes?.idBrand?.data?.attributes?.name}</Link>
     let categories = data?.attributes?.idCategories?.data?.map(item=>{
-        return <Link to="#" key={item?.id}>{item?.attributes?.name}</Link>
+        return <Link to={`/danh-muc/${item?.attributes?.slug}`} key={item?.id}>{item?.attributes?.name}</Link>
     })
     return (
         <>
