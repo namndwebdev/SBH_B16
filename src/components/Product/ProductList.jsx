@@ -27,7 +27,7 @@ export default function ProductList(props){
             />
             <Row gutter={[20, 10]}>
             {
-                data?.map(item=>{
+                data?.data?.map(item=>{
                     let imgUrl = VITE_BASE_API_URL + item?.attributes?.image?.data[0]?.attributes?.url
                     let title = item?.attributes?.name
                     let description = item?.attributes?.description

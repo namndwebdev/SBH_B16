@@ -14,7 +14,7 @@ export default function ProductDetail(){
         return getProductBySlug(params.slug)
     })
    
-    let images = data?.attributes?.image?.data?.map(item=>{
+    let images = data?.data?.attributes?.image?.data?.map(item=>{
         let url = import.meta.env.VITE_BASE_API_URL + item?.attributes?.url
         return {
             original: url,
@@ -22,16 +22,16 @@ export default function ProductDetail(){
         }
     })
     images = images ? images : []
-    let description  = data?.attributes?.description?.replaceAll('/upload', import.meta.env.VITE_BASE_API_URL + '/upload')
-    let brand = <Link to="#">{data?.attributes?.idBrand?.data?.attributes?.name}</Link>
-    let categories = data?.attributes?.idCategories?.data?.map(item=>{
+    let description  = data?.data?.attributes?.description?.replaceAll('/upload', import.meta.env.VITE_BASE_API_URL + '/upload')
+    let brand = <Link to="#">{data?.data?.attributes?.idBrand?.data?.attributes?.name}</Link>
+    let categories = data?.data?.attributes?.idCategories?.data?.map(item=>{
         return <Link to={`/danh-muc/${item?.attributes?.slug}`} key={item?.id}>{item?.attributes?.name}</Link>
     })
     return (
         <>
             {
-                data ? <div className='product'>
-                    <h1 className='title'>{data?.attributes?.name}</h1>
+                data?.data ? <div className='product'>
+                    <h1 className='title'>{data?.data?.attributes?.name}</h1>
                   
                     <Row gutter={[20, 10]}>
                         <Col span={12}>
@@ -41,8 +41,8 @@ export default function ProductDetail(){
                             <Row gutter={[30, 10]}>
                                 <Col span={24}>Thương hiệu: {brand}</Col>
                                 <Col span={24}>Danh mục: {categories}</Col>
-                                <Col span={24} className='old-price'>{currency(data?.attributes?.oldPrice)}</Col>
-                                <Col span={24} className='price'>{currency(data?.attributes?.price)}</Col>
+                                <Col span={24} className='old-price'>{currency(data?.data?.attributes?.oldPrice)}</Col>
+                                <Col span={24} className='price'>{currency(data?.data?.attributes?.price)}</Col>
                                 <Col span={24}>
                                     <Form>
                                         <Form.Item
@@ -53,12 +53,12 @@ export default function ProductDetail(){
                                             <InputNumber
                                                 className='quantity'
                                                 min={1}
-                                                max={data?.attributes?.quantityAvailable}
+                                                max={data?.data?.attributes?.quantityAvailable}
                                             ></InputNumber>
                                         </Form.Item>
                                     </Form>
                                 </Col>
-                                <Col span={24}>Còn lại: {data?.attributes?.quantityAvailable}</Col>
+                                <Col span={24}>Còn lại: {data?.data?.attributes?.quantityAvailable}</Col>
                                 <Col span={24}>
                                     <Button type='primary' className='buy-btn' size='large'>Mua Ngay</Button>
                                 </Col>

@@ -12,7 +12,7 @@ export default function useFetch(layData, query){
         layData()
         .then(res=>{
             let ketqua = res.data
-            setData(ketqua.data)
+            setData(ketqua)
             if(ketqua?.meta?.pagination){
                 setPagination(ketqua.meta.pagination)
             }

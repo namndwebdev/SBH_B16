@@ -1,12 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '@/assets/react.svg'
-import { Layout, Menu, Row, Col, Input } from 'antd';
-import { useSelector } from 'react-redux';
+import { Layout, Menu, Row, Col, Input, Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutAuth } from '@/redux/auth'
 const { Header } = Layout;
 const {Search} = Input
 export default function HeaderComponent() {
     const nav = useNavigate()
+    const dispatch = useDispatch()
     const user = useSelector(stateTong => { return stateTong.auth.user })
+    const token = useSelector(stateTong => { return stateTong.auth.token })
     const items = [{
         key: 'home',
         label: <Link to="/"><h1>Trang chu</h1></Link>
@@ -43,7 +46,16 @@ export default function HeaderComponent() {
                     justifyContent: 'center'
                 }}
             />
-            <h1>{user?.email}</h1>
+            {
+                token ? <>
+                    <Link to={"/thong-tin"}><h1>{user?.email}</h1> </Link>
+                    <Button onClick={()=>{
+                        dispatch(logoutAuth())
+                    }}>Logout</Button>
+                </> : <Button onClick={()=>{
+                    nav('/login')
+                }}>Login</Button>
+            }
         </Header>
     )
 }

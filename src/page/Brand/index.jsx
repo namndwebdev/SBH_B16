@@ -11,7 +11,7 @@ export default function Brand(){
         return getAllBrand()
     })
 
-    const brands = data?.map(item=>{
+    const brands = data?.data?.map(item=>{
         return <div key={item?.id}>
             <Link to={`/thuong-hieu/${item?.attributes?.name}`}> {item?.attributes?.name} </Link>
         </div>

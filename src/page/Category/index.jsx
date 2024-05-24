@@ -11,7 +11,7 @@ export default function Category(){
         return getAllCategories()
     })
 
-    const categories = data?.map(item=>{
+    const categories = data?.data?.map(item=>{
         return <div key={item?.id}>
             <Link to={`/danh-muc/${item?.attributes?.slug}`}> {item?.attributes?.name} </Link>
         </div>
