@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '@/assets/react.svg'
 import { Layout, Menu, Row, Col, Input } from 'antd';
+import { useSelector } from 'react-redux';
 const { Header } = Layout;
 const {Search} = Input
 export default function HeaderComponent() {
     const nav = useNavigate()
+    const user = useSelector(stateTong => { return stateTong.auth.user })
     const items = [{
         key: 'home',
         label: <Link to="/"><h1>Trang chu</h1></Link>
@@ -41,6 +43,7 @@ export default function HeaderComponent() {
                     justifyContent: 'center'
                 }}
             />
+            <h1>{user?.email}</h1>
         </Header>
     )
 }
