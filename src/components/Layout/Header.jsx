@@ -16,6 +16,9 @@ export default function HeaderComponent() {
     }, {
         key: 'contact',
         label: <h1>Contact</h1>
+    },{
+        key: 'cart',
+        label: <Link to={'/cart'}><h1>Gio hang</h1></Link>
     }]
     return (
         <Header

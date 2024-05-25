@@ -4,8 +4,8 @@ import {signup} from '@/services/auth'
 const { Password } = Input
 
 export default function Signup(){
-    const [api, contextHolder] = notification.useNotification();
     const nav = useNavigate()
+    const [api, contextHolder] = notification.useNotification();
     const errorNotify = (title, description) => {
         api['error']({
           message: title,

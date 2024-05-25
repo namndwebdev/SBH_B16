@@ -1,15 +1,31 @@
 import { Link, useParams } from 'react-router-dom'
 import useFetch from "@/customhooks/useFetch"
 import { getProductBySlug } from '@/services/product'
-import { Button, Row, Col, InputNumber, Form } from 'antd'
+import { Button, Row, Col, InputNumber, Form, notification } from 'antd'
 import './index.scss'
 import "react-image-gallery/styles/scss/image-gallery.scss";
 import ImageGallery from "react-image-gallery";
 import { currency } from '@/helper/format'
 import Markdown from 'react-markdown'
+import {useDispatch} from 'react-redux'
+import { addCart } from '@/redux/cart'
 export default function ProductDetail(){
-    
+    const [api, contextHolder] = notification.useNotification();
+    const errorNotify = (title, description) => {
+        api['error']({
+          message: title,
+          description: description
+        });
+    };
+
+    const successNotify = (title, description) => {
+        api['success']({
+          message: title,
+          description: description
+        });
+    };
     const params = useParams()
+    const dispatch = useDispatch()
     const {data, setData, pagination, setPagination, loading} = useFetch(()=>{
         return getProductBySlug(params.slug)
     })
@@ -27,9 +43,18 @@ export default function ProductDetail(){
     let categories = data?.data?.attributes?.idCategories?.data?.map(item=>{
         return <Link to={`/danh-muc/${item?.attributes?.slug}`} key={item?.id}>{item?.attributes?.name}</Link>
     })
+    const [form] = Form.useForm()
+    function addToCart(){
+        let quantity = form.getFieldValue('quantity')
+        let {id} = data?.data
+        let {price, slug, name} = data?.data?.attributes
+        dispatch(addCart({id, price, slug, name, quantity}))
+        successNotify(`Them san pham ${id}`, `So luong: ${quantity}`)
+    }
     return (
         <>
-            {
+            {contextHolder}
+            {   
                 data?.data ? <div className='product'>
                     <h1 className='title'>{data?.data?.attributes?.name}</h1>
                   
@@ -44,7 +69,7 @@ export default function ProductDetail(){
                                 <Col span={24} className='old-price'>{currency(data?.data?.attributes?.oldPrice)}</Col>
                                 <Col span={24} className='price'>{currency(data?.data?.attributes?.price)}</Col>
                                 <Col span={24}>
-                                    <Form>
+                                    <Form form={form}>
                                         <Form.Item
                                             name="quantity"
                                             label="Số lượng"
@@ -60,7 +85,9 @@ export default function ProductDetail(){
                                 </Col>
                                 <Col span={24}>Còn lại: {data?.data?.attributes?.quantityAvailable}</Col>
                                 <Col span={24}>
-                                    <Button type='primary' className='buy-btn' size='large'>Mua Ngay</Button>
+                                    <Button type='primary' className='buy-btn' size='large'
+                                        onClick={addToCart}
+                                    >Mua Ngay</Button>
                                 </Col>
                             </Row>
                         </Col>
