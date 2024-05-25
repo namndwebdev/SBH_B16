@@ -11,6 +11,7 @@ import Brand from "@/page/Brand";
 import Search from "@/page/Search";
 import Profile from '@/page/Profile'
 import PrivateRouter from "@/components/PrivateRouter";
+import Signup from "@/page/Signup";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -43,6 +44,9 @@ const router = createBrowserRouter([
         {
             path: '/login',
             element: <Login/>
+        },{
+            path: '/signup',
+            element: <Signup/>
         }]
     },
 ]);  

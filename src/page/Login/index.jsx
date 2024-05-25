@@ -4,6 +4,7 @@ import  { login } from '@/services/auth'
 import { useDispatch } from 'react-redux'
 import { setAuth } from '@/redux/auth'
 import { useNavigate } from 'react-router'
+import {Link} from 'react-router-dom'
 const { Password } = Input
 export default function Login(){
     const dispath = useDispatch()
@@ -30,6 +31,7 @@ export default function Login(){
                     <Password></Password>
                 </Form.Item>
                 <Button htmlType='submit'>Dang nhap</Button>
+                <Link to="/signup">Ban chua co account ? Dang ky ngay</Link>
             </Form>
         </>
     )
