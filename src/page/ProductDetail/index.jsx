@@ -47,8 +47,8 @@ export default function ProductDetail(){
     function addToCart(){
         let quantity = form.getFieldValue('quantity')
         let {id} = data?.data
-        let {price, slug, name} = data?.data?.attributes
-        dispatch(addCart({id, price, slug, name, quantity}))
+        let {price, slug, name, quantityAvailable} = data?.data?.attributes
+        dispatch(addCart({id, price, slug, name, quantity, quantityAvailable}))
         successNotify(`Them san pham ${id}`, `So luong: ${quantity}`)
     }
     return (

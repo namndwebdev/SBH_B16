@@ -10,26 +10,36 @@ export const cartSlice = createSlice({
   reducers: {
     addCart: (state, action)=>{
         // {id, price, slug, name, quantity}
-        const {id, price, slug, name, quantity} = action.payload
+        let {id, price, slug, name, quantity, quantityAvailable} = action.payload
         let productFinded = state.listProduct.find(item=> {
             return item.id === id
         })
 
         if(productFinded){
             // da co san pham id nay trong gio
-            productFinded.quantity += quantity
+            if(productFinded.quantity + quantity >= quantityAvailable){
+              productFinded.quantity = quantityAvailable
+            }else{
+              productFinded.quantity += quantity
+            }
         }else{
-            state.listProduct.push({id, price, slug, name, quantity})
+            if(quantity >= quantityAvailable){
+              quantity = quantityAvailable
+            }
+            state.listProduct.push({id, price, slug, name, quantity, quantityAvailable})
         }
     },
     updateProductCart: (state, action)=>{
-        const {id, price, slug, name, quantity} = action.payload
+        let {id, quantityAvailable, quantity} = action.payload
         let productFinded = state.listProduct.find(item=> {
           return item.id === id
         })
 
         if(productFinded){
             // da co san pham id nay trong gio
+            if(quantity >= quantityAvailable){
+              quantity = quantityAvailable
+            }
             productFinded.quantity = quantity
         }
       
@@ -39,11 +49,14 @@ export const cartSlice = createSlice({
       state.listProduct = state.listProduct.filter(item=>{
         return item?.id !== id
       })
-    }
+    },
+    clearCart: (state)=>{
+      state.listProduct = []
+    } 
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addCart } = cartSlice.actions
+export const { addCart, updateProductCart, deleteProduct, clearCart } = cartSlice.actions
 
 export default cartSlice.reducer

@@ -17,7 +17,6 @@ export default function Signup(){
             await signup(values)
             nav('/login')
         } catch (error) {
-            console.log(error.message);
             errorNotify('Dang ky khong thanh cong', error.message)
         }
     }

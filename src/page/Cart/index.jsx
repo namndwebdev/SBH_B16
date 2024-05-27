@@ -1,11 +1,27 @@
-import { useSelector } from "react-redux"
-import {Table} from 'antd'
-import {Link} from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux"
+import {Button, InputNumber, Table} from 'antd'
+import {Link, useNavigate} from 'react-router-dom'
 import {currency} from '@/helper/format'
+import {updateProductCart, clearCart} from '@/redux/cart'
+import {createOrder} from '@/services/order'
 export default function Cart(){
-    const listProduct = useSelector(stateTong => stateTong.cart.listProduct)
-    // {id, name, slug, price,  quantity}
- 
+    const user = useSelector(stateTong => stateTong.auth.user)
+    const dataListProduct = useSelector(stateTong => stateTong.cart.listProduct)
+    const nav = useNavigate()
+    const listProduct = dataListProduct.map(item=>{
+        item.key = item.id
+        item.product = item.id
+        item.totalPrice = (Number(item.quantity) * Number(item.price))/1000
+        item.discount = 0
+        return item
+    })
+    const dispatch = useDispatch()
+    const handChangeQuantity = (id, quanity)=>{
+        dispatch(updateProductCart({
+            id: id,
+            quantity: quanity
+        }))
+    }
     const columns = [{
         title: 'ID',
         key: 'id',
@@ -23,7 +39,21 @@ export default function Cart(){
     }, {
         title: 'So luong',
         key: 'quantity',
-        dataIndex: 'quantity'
+        render: (item)=>{
+            return <>
+                <InputNumber 
+                    defaultValue={item.quantity} 
+                    min={1} 
+                    max={item.quantityAvailable}
+                    onChange={(value)=>{
+                        handChangeQuantity(item.id, value)
+                    }}
+                />
+                <span>
+                   Tồn kho: {item.quantityAvailable}
+                </span>
+            </>
+        }
     },{
         title: 'Thanh tien',
         key: 'total',
@@ -35,6 +65,21 @@ export default function Cart(){
     let totalMoney = listProduct.reduce((total, item)=>{
         return total + (item.price * item.quantity)
     }, 0)
+
+    const handleCheckout = ()=>{
+        createOrder({
+            idUser: user.id + "",
+            address: user.address || "",
+            totalOrderPrice: totalMoney/1000,
+            status: 'new',
+            date: '2024-05-27',
+            items: listProduct
+        }).then(res=>{
+            dispatch(clearCart())
+            nav('/')
+        })
+    }
+
     return (<>
        <Table 
         dataSource={listProduct}
@@ -42,5 +87,6 @@ export default function Cart(){
        ></Table>
        
        <h1>Tong tien : {currency(totalMoney)}</h1>
+       <Button onClick={handleCheckout}>Đặt hàng</Button>
     </>)
 }

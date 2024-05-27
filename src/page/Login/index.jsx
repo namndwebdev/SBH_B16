@@ -16,7 +16,6 @@ export default function Login(){
             dispath(setAuth(res.data))
             nav('/')
         } catch (error) {
-            console.log(error);
         }
     }
     return (               
