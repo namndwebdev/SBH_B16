@@ -13,6 +13,7 @@ import Profile from '@/page/Profile'
 import PrivateRouter from "@/components/PrivateRouter";
 import Signup from "@/page/Signup";
 import Cart from '@/page/Cart'
+import Order from '@/page/Order'
 const router = createBrowserRouter([
     {
         path: "/",
@@ -44,7 +45,15 @@ const router = createBrowserRouter([
         },
         {
             path: '/cart',
-            element: <Cart/>
+            element: <PrivateRouter>
+                <Cart/>
+            </PrivateRouter>
+        },
+        {
+            path: '/order',
+            element: <PrivateRouter>
+                <Order/>
+            </PrivateRouter>
         },
         {
             path: '/login',

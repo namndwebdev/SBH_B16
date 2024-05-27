@@ -9,11 +9,14 @@ export default function Cart(){
     const dataListProduct = useSelector(stateTong => stateTong.cart.listProduct)
     const nav = useNavigate()
     const listProduct = dataListProduct.map(item=>{
-        item.key = item.id
-        item.product = item.id
-        item.totalPrice = (Number(item.quantity) * Number(item.price))/1000
-        item.discount = 0
-        return item
+        
+        return {
+            ...item,
+            key : item.id,
+            product : item.id,
+            totalPrice : (Number(item.quantity) * Number(item.price))/1000,
+            discount : 0
+        }
     })
     const dispatch = useDispatch()
     const handChangeQuantity = (id, quanity)=>{
@@ -84,6 +87,7 @@ export default function Cart(){
        <Table 
         dataSource={listProduct}
         columns={columns}
+        rowKey="id" 
        ></Table>
        
        <h1>Tong tien : {currency(totalMoney)}</h1>
